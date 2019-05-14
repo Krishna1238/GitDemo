@@ -1,0 +1,7 @@
+typeMismatch.empNo=Employee No can not empty or can not be string.
+empNo.invalid=Employee No must be positive value..
+empName.required=Employee name is mandatory..
+empDesig.required=Employee Desig is mandatory.
+empAddress.required=Employee address is manadtory.
+empAddress.minlength=Employee address is manadetry.
+empSal.required=Employee salary is required.

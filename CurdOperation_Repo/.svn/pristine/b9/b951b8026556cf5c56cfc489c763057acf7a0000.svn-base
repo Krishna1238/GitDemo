@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+  <bean  id="suhm" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+  <property name="mappings">
+  <props>
+  <prop key="home.htm">pvc</prop>
+  <prop key="emplist.htm">ac</prop>
+  <prop key="delete.htm">deleteController</prop>
+  <prop key="update.htm">updatecontroller</prop>
+  <prop key="insert.htm">insertcontroller</prop>
+  </props>
+  </property>
+  </bean>
+  <!-- controllers -->
+<bean id="pvc" class="org.springframework.web.servlet.mvc.ParameterizableViewController"/>
+
+<bean id="ac" class="com.nt.controller.GetAllEmpController">
+<constructor-arg ref="empservice"/>
+</bean>
+<bean id="deleteController" class="com.nt.controller.DeleteEmpController">
+<constructor-arg ref="empservice"/>
+</bean>
+<!-- configure UpdateController -->
+<bean id="updatecontroller" class="com.nt.controller.UpdateEmpController">
+<constructor-arg ref="empservice"/>
+<property name="commandClass" value="com.nt.command.Command"/>
+<property name="commandName" value="cmd"/>
+<property name="formView" value="update_empdata"/>
+<property name="sessionForm" value="true"/>
+</bean>
+
+<!--configure Validators errors.properties..  -->
+<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+<property name="basename" value="com.nt.commons/errors"/>
+</bean>
+
+<!-- configur Validator class as bean -->
+<bean id="empValidator" class="com.nt.validator.EmpValidator"/>
+
+<!-- configure Insert Controller -->
+<bean id="insertcontroller" class="com.nt.controller.InsertNewDataController">
+<constructor-arg ref="empservice"/>
+<property name="validator" ref="empValidator"/>
+<property name="commandName" value="insert_cmd"/>
+<property name="formView" value="insert"/>
+<property name="sessionForm" value="true"/>
+
+</bean>
+
+<!-- congigure viewResolver -->
+<bean id="irvr" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<property name="prefix" value="/WEB-INF/pages/"/>
+<property name="suffix" value=".jsp"/>
+
+</bean>
+
+</beans>
